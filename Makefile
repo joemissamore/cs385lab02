@@ -1,14 +1,17 @@
-ALL='docker ps -ap'
-
+.PHONY: mysql minibank 
 
 network:
 	docker network create --subnet=172.0.0.0/24 minibanknet
-	
-sqlserver:
+
+mysql:
+	docker build -t mysql:latest ./mysql/.
 	docker run -d --net minibanknet --ip 172.0.0.5 mysql:latest 
 
-minibankapp:
-	docker run -p 80:8080 -d --net minibanknet minibank
+minibank:
+	docker build -t minibank:latest ./minibank/.
+	docker run -p 80:8080 -d --net minibanknet minibank:latest
+
+
 
 clean:
 	docker stop $$(docker ps -aq)
@@ -17,4 +20,4 @@ clean:
 	docker network prune
 
 
-run: network sqlserver minibankapp
+run: network mysql minibank

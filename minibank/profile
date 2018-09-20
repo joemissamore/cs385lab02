@@ -1,5 +1,0 @@
-GOPATH="$HOME/go"
-export GOPATH
-# set PATH so it includes user's private bin directories
-PATH="$HOME/bin:$HOME/.local/bin:$GOPATH/bin:/usr/local/go/bin:$PATH"
-
